@@ -1,6 +1,6 @@
 # {{cookiecutter.project_name}}
 
-This repo contains all the code of the website from https://{{domain}}
+This repo contains all the code of the website from https://{{cookiecutter.domain}}
 
 ### Development
 
@@ -34,7 +34,7 @@ Uses gunicorn + nginx.
     ...
     web_1    |   File "/usr/local/lib/python3.6/site-packages/psycopg2/__init__.py", line 127, in connect
     web_1    |     conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
-    web_1    | django.db.utils.OperationalError: FATAL:  database "{{postgresql_database}}_prod" does not exist
+    web_1    | django.db.utils.OperationalError: FATAL:  database "{{cookiecutter.postgresql_database}}_prod" does not exist
     ```
     This happens because the database is created the first time that the db service is started. In order to "restart" the db service you have to stop the docker-compose with:
 

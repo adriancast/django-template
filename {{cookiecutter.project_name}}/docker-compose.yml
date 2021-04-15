@@ -17,9 +17,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER={{postgresql_user}}
-      - POSTGRES_PASSWORD={{postgresql_user_dev}}
-      - POSTGRES_DB={{postgresql_database}}_dev
+      - POSTGRES_USER={{cookiecutter.postgresql_user}}
+      - POSTGRES_PASSWORD={{cookiecutter.postgresql_password_dev}}
+      - POSTGRES_DB={{cookiecutter.postgresql_database}}_dev
 
 volumes:
   postgres_data:
