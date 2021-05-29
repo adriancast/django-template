@@ -3,8 +3,8 @@
     "secret_key": "Django secret key",
     "postgresql_database": "This database name will be used to create the 'dev' and 'prod' environment",
     "postgresql_user": "This database user will be used in 'dev' and 'prod' databases",
-    "postgresql_password_prod": "This password will be ONLY used in the 'prod' environment",
     "postgresql_password_dev": "This password will be ONLY used in the 'dev' environment",
+    "postgresql_password_prod": "This password will be ONLY used in the 'prod' environment",
     "domain": "Url that is going to use the app in production (example.com)",
     "email": "This email will be used to configure the letsencrypt (hello@example.com)"
 }

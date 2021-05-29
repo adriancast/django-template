@@ -15,11 +15,10 @@ services:
   db:
     image: postgres:12.0-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER={{cookiecutter.postgresql_user}}
-      - POSTGRES_PASSWORD={{cookiecutter.postgresql_password_dev}}
-      - POSTGRES_DB={{cookiecutter.postgresql_database}}_dev
+      - {{cookiecutter.project_name}}_postgres_data_dev:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.dev.db
 
 volumes:
-  postgres_data:
+  {{cookiecutter.project_name}}_postgres_data_dev:
+    external: true

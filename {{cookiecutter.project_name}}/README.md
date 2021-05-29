@@ -6,7 +6,34 @@ This repo contains all the code of the website from https://{{cookiecutter.domai
 
 Uses the default Django development server.
 
-1. Build the images and run the containers:
+1. Check that you have your .env.dev and .env.dev.db.  If for some reason these files are not generated, remember that you can find samples in the repository.
+   ```sh
+   $ cat .env.dev
+   
+   DEBUG=1
+   SECRET_KEY={{cookiecutter.secret_key}}
+   DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+   SQL_ENGINE=django.db.backends.postgresql
+   SQL_DATABASE={{cookiecutter.postgresql_database}}_dev
+   SQL_USER={{cookiecutter.postgresql_user}}
+   SQL_PASSWORD={{cookiecutter.postgresql_password_dev}}
+   SQL_HOST=db
+   SQL_PORT=5432
+   DATABASE=postgres
+   
+   $ cat .env.dev.db
+
+   POSTGRES_USER={{cookiecutter.postgresql_user}}
+   POSTGRES_PASSWORD={{cookiecutter.postgresql_password_dev}}
+   POSTGRES_DB={{cookiecutter.postgresql_database}}_dev
+    ```
+
+2. Create docker volumes to save the data:
+    ```sh
+    $ docker volume create --name={{cookiecutter.project_name}}_postgres_data
+    ```
+
+3. Build the images and run the containers:
 
     ```sh
     $ docker-compose up -d --build
@@ -16,29 +43,50 @@ Uses the default Django development server.
 
 ### Production
 
-Uses gunicorn + nginx.
+Uses Gunicorn + Nginx + Letsencrypt.
 
-1. Build the images and run the containers:
+1. Check that you have your .env.prod, .env.prod.db and .env.prod.proxy-companion. If for some reason these files are not generated, remember that you can find samples in the repository.
+    ```sh
+    $ cat .env.prod
+    $ cat .env.prod.db
+    $ cat .env.prod.proxy-companion
+    ```
+2. Create docker volumes to save the data
+    ```sh
+    $ docker volume create --name={{cookiecutter.project_name}}_postgres_data
+    $ docker volume create --name=static_volume
+    $ docker volume create --name=media_volume
+    $ docker volume create --name=certs
+    $ docker volume create --name=html
+    $ docker volume create --name=vhost
+    ```
+3. Build the images and run the containers:
 
     ```sh
     $ docker-compose -f docker-compose.prod.yml up --build
     ```
 
-    Test it out at [http://localhost:1337](http://localhost:1337). No mounted folders. To apply changes, the image must be re-built.
+# Hints to work with this project
 
-    NOTE: If you run the Development environment and then you run the production environment you will get a error that says that the yachtty_pro database is not created:
+1. Execute a command inside de Django container in **DEVELOPMENT** environment.
     ```sh
-    $ docker-compose up -d --build
-    ...
-    $ docker-compose -f docker-compose.prod.yml up -d --build
-    ...
-    web_1    |   File "/usr/local/lib/python3.6/site-packages/psycopg2/__init__.py", line 127, in connect
-    web_1    |     conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
-    web_1    | django.db.utils.OperationalError: FATAL:  database "{{cookiecutter.postgresql_database}}_prod" does not exist
+    $ docker-compose exec web python manage.py shell
     ```
-    This happens because the database is created the first time that the db service is started. In order to "restart" the db service you have to stop the docker-compose with:
-
+2. Execute a command inside de Django container in **PRODUCTION** environment.
     ```sh
-    $ docker-compose down --volumes
-    $ docker-compose -f docker-compose.prod.yml down --volumes
+    $ docker-compose -f docker-compose.prod.yml exec web python manage.py shell
     ```
+3. Create Django migrations. In case you want to execute this in production environment, remember to use the -f parameter.
+    ```sh
+    $ docker-compose exec web python manage.py makemigrations
+    ```
+4. Execute Django migrations. In case you want to execute this in production environment, remember to use the -f parameter.
+    ```sh
+    $ docker-compose exec web python manage.py migrate
+    ```
+   
+5. Create Django admin superuser. In case you want to execute this in production environment, remember to use the -f parameter.
+    ```sh
+    $ docker-compose exec web python manage.py createsuperuser
+    ```
+6. To configure the debugger in Pycharm you can use guide in the following [link](https://testdriven.io/blog/django-debugging-pycharm/#:~:text=To%20do%20so%2C%20open%20PyCharm,create%20a%20new%20Docker%20configuration.). Remember that you must have a professional license to use this feature.
