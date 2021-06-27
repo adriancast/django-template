@@ -30,7 +30,7 @@ Uses the default Django development server.
 
 2. Create docker volumes to save the data:
     ```sh
-    $ docker volume create --name={{cookiecutter.project_name}}_postgres_data
+    $ docker volume create --name={{cookiecutter.project_name}}_postgres_data_dev
     ```
 
 3. Build the images and run the containers:
