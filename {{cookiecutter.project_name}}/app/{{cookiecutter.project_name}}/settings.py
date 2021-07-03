@@ -139,3 +139,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Django admin interface settings
 INSTALLED_APPS = ['admin_interface', 'colorfield'] + INSTALLED_APPS
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+{% if cookiecutter.add_sentry == 'yes' %}
+sentry_sdk.init(
+    dsn='{{cookiecutter.specify_sentry_dsn_if_it_was_added_to_the_project}}',
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
+
+{% endif %}
