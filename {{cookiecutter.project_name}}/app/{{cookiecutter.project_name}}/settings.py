@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+{% if cookiecutter.add_sentry == 'yes' %}
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+{% endif %}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
