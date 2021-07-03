@@ -4,3 +4,4 @@ gunicorn==20.0.4
 Pillow==8.1.2
 psycopg2-binary==2.8.6
 {% if cookiecutter.add_sentry == 'yes' %}sentry-sdk==1.1.0{% endif %}
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}django-prometheus==2.0.0{% endif %}

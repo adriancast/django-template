@@ -18,7 +18,31 @@ services:
       - {{cookiecutter.project_name}}_postgres_data_dev:/var/lib/postgresql/data/
     env_file:
       - ./.env.dev.db
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
+  prometheus:
+    image: prometheus:latest
+    restart: always
+    build:
+      context: prometheus
+      dockerfile: Dockerfile
 
+  grafana:
+    image: grafana/grafana:8.0.4
+    restart: always
+    volumes:
+      - {{cookiecutter.project_name}}_grafana:/var/lib/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+{% endif %}
 volumes:
   {{cookiecutter.project_name}}_postgres_data_dev:
     external: true
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
+  {{cookiecutter.project_name}}_grafana:
+    external: true
+{% endif %}

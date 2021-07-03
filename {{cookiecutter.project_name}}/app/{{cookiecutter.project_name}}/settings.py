@@ -35,10 +35,15 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
+# Required in order to use Prometheus
+ALLOWED_HOSTS += ['web']
 
+{% endif %}
 # Application definition
 
 INSTALLED_APPS = [
+    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}'django_prometheus',{% endif %}
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +53,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}'django_prometheus.middleware.PrometheusBeforeMiddleware',{% endif %}
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}'django_prometheus.middleware.PrometheusAfterMiddleware',{% endif %}
 ]
 
 ROOT_URLCONF = '{{cookiecutter.project_name}}.urls'

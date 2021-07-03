@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}from django.urls import include{% endif %}
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}path('prometheus/', include('django_prometheus.urls')),{% endif %}
 ]
 
 if settings.DEBUG:
