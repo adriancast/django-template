@@ -48,7 +48,26 @@ services:
       - vhost:/etc/nginx/vhost.d
     depends_on:
       - nginx-proxy
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
+  prometheus:
+    image: prometheus:latest
+    restart: always
+    build:
+      context: prometheus
+      dockerfile: Dockerfile
 
+  grafana:
+    image: grafana/grafana:8.0.4
+    restart: always
+    volumes:
+      - {{cookiecutter.project_name}}_grafana:/var/lib/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    env_file:
+      - .env.prod.grafana
+{% endif %}
 volumes:
   {{cookiecutter.project_name}}_postgres_data:
     external: true
@@ -62,3 +81,7 @@ volumes:
     external: true
   vhost:
     external: true
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
+  {{cookiecutter.project_name}}_grafana:
+    external: true
+{% endif %}
