@@ -22,6 +22,8 @@ services:
   prometheus:
     image: prometheus:latest
     restart: always
+    ports:
+      - 9090:9090
     build:
       context: prometheus
       dockerfile: Dockerfile
