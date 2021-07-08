@@ -6,3 +6,4 @@ __pycache
 .env.prod
 .env.prod.db
 .env.prod.proxy-companion
+.env.prod.grafana

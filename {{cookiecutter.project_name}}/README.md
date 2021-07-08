@@ -31,6 +31,7 @@ Uses the default Django development server.
 2. Create docker volumes to save the data:
     ```sh
     $ docker volume create --name={{cookiecutter.project_name}}_postgres_data_dev
+    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}$ docker volume create --name={{cookiecutter.project_name}}_grafana{% endif %}
     ```
 
 3. Build the images and run the containers:
@@ -45,11 +46,12 @@ Uses the default Django development server.
 
 Uses Gunicorn + Nginx + Letsencrypt.
 
-1. Check that you have your .env.prod, .env.prod.db and .env.prod.proxy-companion. If for some reason these files are not generated, remember that you can find samples in the repository.
+1. Check that you have your {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}.env.prod.grafana, {% endif %}.env.prod, .env.prod.db and .env.prod.proxy-companion. If for some reason these files are not generated, remember that you can find samples in the repository.
     ```sh
     $ cat .env.prod
     $ cat .env.prod.db
     $ cat .env.prod.proxy-companion
+    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}$ cat .env.prod.grafana{% endif %}
     ```
 2. Create docker volumes to save the data
     ```sh
@@ -59,6 +61,7 @@ Uses Gunicorn + Nginx + Letsencrypt.
     $ docker volume create --name=certs
     $ docker volume create --name=html
     $ docker volume create --name=vhost
+    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}$ docker volume create --name={{cookiecutter.project_name}}_grafana{% endif %}
     ```
 3. Build the images and run the containers:
 
