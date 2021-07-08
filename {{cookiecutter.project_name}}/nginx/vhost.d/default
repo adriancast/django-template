@@ -7,3 +7,9 @@ location /mediafiles/ {
   alias /home/app/web/mediafiles/;
   add_header Access-Control-Allow-Origin *;
 }
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
+location /prometheus/metrics {
+    deny all;
+    return 403;
+}
+{% endif %}

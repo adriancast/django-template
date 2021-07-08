@@ -151,8 +151,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INSTALLED_APPS = ['admin_interface', 'colorfield'] + INSTALLED_APPS
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-{% if cookiecutter.add_sentry == 'yes' %}
-sentry_sdk.init(
+{% if cookiecutter.add_sentry == 'yes' %}sentry_sdk.init(
     dsn='{{cookiecutter.specify_sentry_dsn_if_it_was_added_to_the_project}}',
     integrations=[DjangoIntegration()],
 
@@ -165,5 +164,4 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
-
 {% endif %}
