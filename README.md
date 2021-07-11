@@ -31,7 +31,7 @@ Lets be clear. If you can do a task in less than 5 minutes why would you even bo
 To execute the cookiecutter template wizard run:
 ```
 $ pip install cookiecutter
-$ cookiecutter https://github.com/adriancast/django-docker-letsencrypt-cookiecutter
+$ cookiecutter gh:adriancast/django-template
 ```
 If you need more information about cookiecutter visit this [oficial guide](https://cookiecutter.readthedocs.io/en/latest/installation.html).
 
