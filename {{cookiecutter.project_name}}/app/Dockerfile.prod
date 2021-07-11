@@ -20,10 +20,10 @@ RUN apk --update add libxml2-dev libxslt-dev libffi-dev gcc musl-dev libgcc open
 RUN apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev
 
 # lint
-RUN pip install --upgrade pip
-RUN pip install flake8
-COPY . .
-RUN flake8 --ignore=E501,F401 .
+#RUN pip install --upgrade pip
+#RUN pip install flake8
+#COPY . .
+#RUN flake8 --ignore=E501,F401 .
 
 # install dependencies
 COPY ./requirements.txt .

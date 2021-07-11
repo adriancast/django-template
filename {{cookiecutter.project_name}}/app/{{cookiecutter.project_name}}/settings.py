@@ -33,7 +33,7 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 # HTTPS redirect
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(",")
 
 {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
 # Required in order to use Prometheus
