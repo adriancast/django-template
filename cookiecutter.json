@@ -5,9 +5,8 @@
     "postgresql_user": "This database user will be used in 'dev' and 'prod' databases",
     "postgresql_password_dev": "This password will be ONLY used in the 'dev' environment",
     "postgresql_password_prod": "This password will be ONLY used in the 'prod' environment",
-    "add_sentry": ["no", "yes"],
-    "specify_sentry_dsn_if_it_was_added_to_the_project": "https://examplePublicKey@o0.ingest.sentry.io/0",
-    "add_prometheus_and_grafana": ["no", "yes"],
+    "add_sentry": ["yes", "no"],
+    "add_prometheus_and_grafana": ["yes", "no"],
     "domain": "Url that is going to use the app in production (example.com)",
     "email": "This email will be used to configure the letsencrypt (hello@example.com)"
 }
