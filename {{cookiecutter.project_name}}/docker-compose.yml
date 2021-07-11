@@ -33,6 +33,7 @@ services:
     restart: always
     volumes:
       - {{cookiecutter.project_name}}_grafana:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
     ports:
       - 3000:3000
     depends_on:

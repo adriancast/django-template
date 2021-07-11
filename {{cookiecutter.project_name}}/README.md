@@ -1,6 +1,6 @@
 # {{cookiecutter.project_name}}
 
-This repo contains all the code of the website from https://{{cookiecutter.domain}}
+This repo contains all the code of the website from https://{{cookiecutter.production_domain_url}}
 
 ### Development
 
