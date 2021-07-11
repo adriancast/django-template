@@ -152,7 +152,7 @@ INSTALLED_APPS = ['admin_interface', 'colorfield'] + INSTALLED_APPS
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 {% if cookiecutter.add_sentry == 'yes' %}sentry_sdk.init(
-    dsn='{{cookiecutter.specify_sentry_dsn_if_it_was_added_to_the_project}}',
+    dsn='https://examplePublicKey@o0.ingest.sentry.io/0', # Update with your project DSN
     integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
