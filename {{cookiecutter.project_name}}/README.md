@@ -41,10 +41,21 @@ Uses the default Django development server.
     ```
 
     Test it out at [http://localhost:8000](http://localhost:8000). The "app" folder is mounted into the container and your code changes apply automatically.
+    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}Grafana dashboard will be accesible in [http://localhost:3000](http://localhost:3000).{% endif %}
 
-### Production
+### Before deploying to production
+It's important that the DNS records are setup properly before deploying the app to the production server. You will need to make sure that you have the following records:
+- A: record to set the IPv4 of your production server
+- AAAA: record to set the IPv6 of your production server
+- CNAME: record to configure the "wwww" subdomain.
 
-Uses Gunicorn + Nginx + Letsencrypt.
+Here is an example of how to configure this in [GoDaddy](https://godaddy.com/)
+![Screenshot from 2021-07-11 19-28-45](https://user-images.githubusercontent.com/17761956/125204570-40738000-e27e-11eb-81a4-7a495949af73.png)
+
+
+### Production configuration
+
+The application will be served using Gunicorn and NGINX with HTTPS certificates.
 
 1. Check that you have your {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}.env.prod.grafana, {% endif %}.env.prod, .env.prod.db and .env.prod.proxy-companion. If for some reason these files are not generated, remember that you can find samples in the repository.
     ```sh
@@ -68,6 +79,9 @@ Uses Gunicorn + Nginx + Letsencrypt.
     ```sh
     $ docker-compose -f docker-compose.prod.yml up --build
     ```
+# Production Grafana
+It will automatically load the provisioning configurations and serve the dashboard in [http://{{cookiecutter.production_domain_url}}:3000](http://{{cookiecutter.production_domain_url}}:3000).
+
 
 # Hints to work with this project
 
