@@ -1,11 +1,23 @@
-# What is this my friend?
+# The ultimate Django template to build a startup
 
 Lets be clear. If you can do a task in less than 5 minutes why would you even bother in do all this hard work by yourself? This cookie cutter provides you with:
-1. Django base project.
-2. Docker support.
-3. File generation of the .envs for the docker containers.
-4. Nginx configuration to serve the media and static files in the production environment.
-5. Letsencrypt + Cerbot support out the box to have fully HTTPS support in your production environment.
+1. **Django base project:** The wizzard will create a default Django project structure
+2. **Docker:** you will get Docker support out of the box. You will get a production ready Docker environment and also a local development environment to add new features to your project. 
+3. **Docker environment files:** The template will automatically the environment files that contains all the sensetive data. This files will not be reposited in your project to prevent password leaks.
+4. **HTTPS out of the box:** When using the template wizard, you must use the real production domain for your project. This will be used to create the certificates of your production domain. The certificates will be automatically renewed.
+5. **Monitoring:** If selected in the wizard, Sentry configuration will be added to your project. Remember to edit the Sentry DSN once you created your project in order to connect your project with your Sentry account.
+6. **Metrics:** If selected in the wizard, Grafana and Prometheus will be added to your project. This template will configure the datasource automatically and will add a dashboard to your Grafana displaying basic metrics of your Django application.
+
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/17761956/125190499-ccb18300-e23d-11eb-8254-6c98434a4131.png" height="180" />
+  <img src="https://user-images.githubusercontent.com/17761956/125190618-582b1400-e23e-11eb-9c81-d9be02d675c2.jpg" height="180" /> 
+  <img src="https://user-images.githubusercontent.com/17761956/125190738-eacbb300-e23e-11eb-9101-62db12ffb53d.jpg" height="180" />
+  <img src="https://user-images.githubusercontent.com/17761956/125190802-4138f180-e23f-11eb-87aa-d97822260a99.png" height="180" />
+  <img src="https://user-images.githubusercontent.com/17761956/125190835-77767100-e23f-11eb-8d62-2af6c585e974.png" height="180" />
+  <img src="https://user-images.githubusercontent.com/17761956/125190872-b60c2b80-e23f-11eb-81ab-50ffd01984a4.png" height="180" />
+  <img src="https://user-images.githubusercontent.com/17761956/125190914-ef449b80-e23f-11eb-81d8-d87a7bcb385b.png" height="180" />
+</p>
+
 
 # Things to take in consideration
 
