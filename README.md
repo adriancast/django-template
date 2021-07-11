@@ -34,3 +34,6 @@ $ pip install cookiecutter
 $ cookiecutter https://github.com/adriancast/django-docker-letsencrypt-cookiecutter
 ```
 If you need more information about cookiecutter visit this [oficial guide](https://cookiecutter.readthedocs.io/en/latest/installation.html).
+
+![Screenshot from 2021-07-11 13-09-40](https://user-images.githubusercontent.com/17761956/125192676-63377180-e249-11eb-8014-1fbecc749ecc.png)
+
