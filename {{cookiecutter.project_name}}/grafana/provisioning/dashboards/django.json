@@ -1,4 +1,4 @@
-{
+{% raw %}{
   "__inputs": [],
   "__requires": [
     {
@@ -1029,4 +1029,4 @@
   "title": "Django",
   "uid": "O6v4rMpizda",
   "version": 1
-}
+}{% endraw %}
