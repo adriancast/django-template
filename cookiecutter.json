@@ -1,12 +1,12 @@
 {
-    "project_name": "Name of your project",
-    "secret_key": "Django secret key",
-    "postgresql_database": "This database name will be used to create the 'dev' and 'prod' environment",
-    "postgresql_user": "This database user will be used in 'dev' and 'prod' databases",
-    "postgresql_password_dev": "This password will be ONLY used in the 'dev' environment",
-    "postgresql_password_prod": "This password will be ONLY used in the 'prod' environment",
+    "project_name": "projectname",
+    "secret_key": "Plea$eUse$trong$ecretKey",
+    "postgresql_database": "DatabaseNamePostgreSQL",
+    "postgresql_user": "DatabaseUserPostgreSQL",
+    "postgresql_password_dev": "DevelopmentPostgresqlPa$$w0d",
+    "postgresql_password_prod": "ProductionPostgresqlPa$$w0d",
     "add_sentry": ["yes", "no"],
     "add_prometheus_and_grafana": ["yes", "no"],
-    "domain": "Url that is going to use the app in production (example.com)",
-    "email": "This email will be used to configure the letsencrypt (hello@example.com)"
+    "production_domain_url": "projectname.com",
+    "letsencrypt_email": "hello@projectname.com"
 }
