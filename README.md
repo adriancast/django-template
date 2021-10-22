@@ -8,16 +8,11 @@ Lets be clear. If you can do a task in less than 5 minutes why would you even bo
 5. **Monitoring:** If selected in the wizard, Sentry configuration will be added to your project. Remember to edit the Sentry DSN once you created your project in order to connect your project with your Sentry account.
 6. **Metrics:** If selected in the wizard, Grafana and Prometheus will be added to your project. This template will configure the datasource automatically and will add a dashboard to your Grafana displaying basic metrics of your Django application.
 
-<p float="left">
-  <img src="https://user-images.githubusercontent.com/17761956/125190499-ccb18300-e23d-11eb-8254-6c98434a4131.png" height="180" />
-  <img src="https://user-images.githubusercontent.com/17761956/125190618-582b1400-e23e-11eb-9c81-d9be02d675c2.jpg" height="180" /> 
-  <img src="https://user-images.githubusercontent.com/17761956/125190738-eacbb300-e23e-11eb-9101-62db12ffb53d.jpg" height="180" />
-  <img src="https://user-images.githubusercontent.com/17761956/125190802-4138f180-e23f-11eb-87aa-d97822260a99.png" height="180" />
-  <img src="https://user-images.githubusercontent.com/17761956/125190835-77767100-e23f-11eb-8d62-2af6c585e974.png" height="180" />
-  <img src="https://user-images.githubusercontent.com/17761956/125190872-b60c2b80-e23f-11eb-81ab-50ffd01984a4.png" height="180" />
-  <img src="https://user-images.githubusercontent.com/17761956/125190914-ef449b80-e23f-11eb-81d8-d87a7bcb385b.png" height="180" />
-</p>
+# Architecture Diagram
 
+Once all the tools are installed, you architecture would look like the following 
+
+![Arhitecture Diagram](https://user-images.githubusercontent.com/23509868/137785149-5aa83029-6579-4b1c-a4e6-c2de2e27722e.jpg)
 
 # Things to take in consideration
 
