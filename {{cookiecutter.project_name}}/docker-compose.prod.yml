@@ -2,9 +2,7 @@ version: '3.7'
 
 services:
   web:
-    build:
-      context: ./app
-      dockerfile: Dockerfile.prod
+    image: {{cookiecutter.dockerhub_account}}/{{cookiecutter.project_name}}:latest
     command: gunicorn {{cookiecutter.project_name}}.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/staticfiles
@@ -23,7 +21,7 @@ services:
       - .env.prod.db
   nginx-proxy:
     container_name: nginx-proxy
-    build: nginx
+    image: {{cookiecutter.dockerhub_account}}/{{cookiecutter.project_name}}-nginx:latest
     restart: always
     ports:
       - 443:443
@@ -50,18 +48,14 @@ services:
       - nginx-proxy
 {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
   prometheus:
-    image: prometheus:latest
+    image: {{cookiecutter.dockerhub_account}}/{{cookiecutter.project_name}}-prometheus:latest
     restart: always
-    build:
-      context: prometheus
-      dockerfile: Dockerfile
 
   grafana:
-    image: grafana/grafana:8.0.4
+    image: {{cookiecutter.dockerhub_account}}/{{cookiecutter.project_name}}-grafana:latest
     restart: always
     volumes:
       - {{cookiecutter.project_name}}_grafana:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
     ports:
       - 3000:3000
     depends_on:
@@ -85,4 +79,4 @@ volumes:
 {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
   {{cookiecutter.project_name}}_grafana:
     external: true
-{% endif %}
+{% endif %} 

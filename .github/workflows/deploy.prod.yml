@@ -1,0 +1,179 @@
+{% raw %}
+name: deploy-production
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  docker-build-and-publish-web:
+    name: docker-build-and-publish-web
+    runs-on: ubuntu-latest
+    steps:
+      -
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push website
+        id: docker_build_web
+        uses: docker/build-push-action@v2
+        with:
+          context: ./app
+          file: ./app/Dockerfile.prod
+          pull: true
+          push: true
+          build-args: |
+            arg1=value1
+            arg2=value2
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest
+          cache-to: type=inline
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest,${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ github.sha }}
+
+  docker-build-and-publish-prometheus:
+    name: docker-build-and-publish-prometheus
+    runs-on: ubuntu-latest
+    steps:
+      -
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push prometheus
+        id: docker_build_prometheus
+        uses: docker/build-push-action@v2
+        with:
+          context: ./prometheus
+          pull: true
+          push: true
+          build-args: |
+            arg1=value1
+            arg2=value2
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}-prometheus:latest
+          cache-to: type=inline
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}-prometheus:latest,${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}-prometheus:${{ github.sha }}
+
+  docker-build-and-publish-grafana:
+    name: docker-build-and-publish-grafana
+    runs-on: ubuntu-latest
+    steps:
+      -
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push grafana
+        id: docker_build_grafana
+        uses: docker/build-push-action@v2
+        with:
+          context: ./grafana
+          pull: true
+          push: true
+          build-args: |
+            arg1=value1
+            arg2=value2
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}-grafana:latest
+          cache-to: type=inline
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}-grafana:latest,${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}-grafana:${{ github.sha }}
+
+  docker-build-and-publish-nginx:
+    name: docker-build-and-publish-nginx
+    runs-on: ubuntu-latest
+    steps:
+      -
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push nginx
+        id: docker_build_nginx
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nginx
+          pull: true
+          push: true
+          build-args: |
+            arg1=value1
+            arg2=value2
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}-grafana:latest
+          cache-to: type=inline
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}-nginx:latest,${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}-nginx:${{ github.sha }}
+
+  deploy:
+    name: deploy-to-production
+    runs-on: ubuntu-latest
+    needs: [docker-build-and-publish-web, docker-build-and-publish-prometheus, docker-build-and-publish-nginx, docker-build-and-publish-grafana]
+    steps:
+      -
+        uses: actions/checkout@v2
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Deploy to server
+        uses: wshihadeh/docker-deployment-action@v1
+        with:
+          remote_docker_host: {{cookiecutter.production_server_user}}@{{cookiecutter.production_server_ip}}
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
+          deployment_mode: docker-compose
+          copy_stack_file: true
+          pull_images_first: true
+{% endraw %}
+          deploy_path: /opt/{{cookiecutter.project_name}}
+          stack_file_name: docker-compose.prod.yml
+          keep_files: 5
+          args: up -d
+          pre_deployment_command_args: |
+            version
+            docker volume create --name={{cookiecutter.project_name}}_postgres_data
+            docker volume create --name=static_volume
+            docker volume create --name=media_volume
+            docker volume create --name=certs
+            docker volume create --name=html
+            docker volume create --name=vhost
+            {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}$ docker volume create --name={{cookiecutter.project_name}}_grafana{% endif %}
