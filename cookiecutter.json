@@ -9,6 +9,5 @@
     "add_prometheus_and_grafana": ["yes", "no"],
     "production_domain_url": "projectname.com",
     "letsencrypt_email": "hello@projectname.com",
-    "production_server_user": "root",
-    "production_server_ip": "138.68.129.97" 
+    "dockerhub_account": "YourDockerhubUsername" 
 }
