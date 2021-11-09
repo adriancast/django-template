@@ -61,13 +61,11 @@ You will have to configure the the Dockerhub account, the Github actions for the
    ```sh
    $ ssh-keygen -t rsa -C "your_email@example.com" -f ~/.ssh/id_deploy_rsa -N ''
    ```
-   To let Github actions deploy to your production server, you must add the **id_deploy_rsa.pub** in the **~/.ssh/authorized_keys** file inside the production server. You can automate this task inside Digital Ocean using the "User data" option while creating the droplet.
+   To let Github actions deploy to your production server, you must add the **id_deploy_rsa.pub** in the **~/.ssh/authorized_keys** file inside the production server.
 
     ```sh
     $ echo "ssh-rsa AAAACEzaC1yc2E...GvaQ your_email@example.com" >> ~/.ssh/authorized_keys
     ```
-    
-    ![image](https://user-images.githubusercontent.com/17761956/140996405-44aca971-7b1e-4549-8b7b-b5a5004c43fd.png)
 
  * **Environment files:** Once the server is created, you must copy the .env files in the production server inside **/opt/{{cookiecutter.project_name}}** path.
     ```sh
