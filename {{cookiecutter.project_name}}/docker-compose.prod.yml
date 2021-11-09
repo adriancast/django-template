@@ -46,7 +46,7 @@ services:
       - vhost:/etc/nginx/vhost.d
     depends_on:
       - nginx-proxy
-
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
   prometheus:
     image: {{cookiecutter.dockerhub_account}}/{{cookiecutter.project_name}}-prometheus:latest
     restart: always
@@ -62,6 +62,7 @@ services:
       - prometheus
     env_file:
       - .env.prod.grafana
+{% endif %}
 volumes:
   {{cookiecutter.project_name}}_postgres_data:
     external: true
@@ -75,6 +76,7 @@ volumes:
     external: true
   vhost:
     external: true
-
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
   {{cookiecutter.project_name}}_grafana:
     external: true
+{% endif %} 
