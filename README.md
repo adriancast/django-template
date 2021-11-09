@@ -22,7 +22,7 @@ Once all the tools are installed, you architecture would look like the following
 - In order to make Letsencrypt generate the certificates it will use a HTTP-01 challenge. In order to configure the pro environment, make sure that the domain configured in the cookicuter is properly configured in the DNS side. You must add A and AAA records in order to make letsencrypt work. If you want to learn more of the challenges that Letsencrypt does, follow this [guide](https://letsencrypt.org/docs/challenge-types/).
 
 
-# Usage of django-docker-letsencrypt-cookiecutter
+# Usage of the django-template
 
 To execute the cookiecutter template wizard run:
 ```
