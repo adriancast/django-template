@@ -1,6 +1,9 @@
 *.pyc
 __pycache
 .DS_Store
+.idea
+
+# Keep passwords outside the repository
 .env.dev
 .env.dev.db
 .env.prod
