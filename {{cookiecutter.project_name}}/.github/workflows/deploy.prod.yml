@@ -176,4 +176,4 @@ jobs:
             docker volume create --name=certs
             docker volume create --name=html
             docker volume create --name=vhost
-            {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}$ docker volume create --name={{cookiecutter.project_name}}_grafana{% endif %}
+            {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}docker volume create --name={{cookiecutter.project_name}}_grafana{% endif %}
