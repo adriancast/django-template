@@ -2,11 +2,12 @@
 
 Lets be clear. If you can do a task in less than 5 minutes why would you even bother in do all this hard work by yourself? This cookie cutter provides you with:
 1. **Django base project:** The wizzard will create a default Django project structure
-2. **Docker:** you will get Docker support out of the box. You will get a production ready Docker environment and also a local development environment to add new features to your project. 
-3. **Docker environment files:** The template will automatically the environment files that contains all the sensetive data. This files will not be reposited in your project to prevent password leaks.
-4. **HTTPS out of the box:** When using the template wizard, you must use the real production domain for your project. This will be used to create the certificates of your production domain. The certificates will be automatically renewed.
-5. **Monitoring:** If selected in the wizard, Sentry configuration will be added to your project. Remember to edit the Sentry DSN once you created your project in order to connect your project with your Sentry account.
-6. **Metrics:** If selected in the wizard, Grafana and Prometheus will be added to your project. This template will configure the datasource automatically and will add a dashboard to your Grafana displaying basic metrics of your Django application.
+2. **CI/CD integration with Github actions:** Github actions will be already configured in your project. It will deploy to your production server everytime a new commit is pushed to the master branch.
+3. **Docker:** you will get Docker support out of the box. You will get a production ready Docker environment and also a local development environment to add new features to your project. 
+4. **Docker environment files:** The template will automatically the environment files that contains all the sensetive data. This files will not be reposited in your project to prevent password leaks.
+5. **HTTPS out of the box:** When using the template wizard, you must use the real production domain for your project. This will be used to create the certificates of your production domain. The certificates will be automatically renewed.
+6. **Monitoring:** If selected in the wizard, Sentry configuration will be added to your project. Remember to edit the Sentry DSN once you created your project in order to connect your project with your Sentry account.
+7. **Metrics:** If selected in the wizard, Grafana and Prometheus will be added to your project. This template will configure the datasource automatically and will add a dashboard to your Grafana displaying basic metrics of your Django application.
 
 # Architecture Diagram
 
