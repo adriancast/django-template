@@ -48,7 +48,7 @@ Uses the default Django development server.
 
 You will have to configure the the Dockerhub account, the Github actions for the CI/CD, DNS and the production server:
 
-* Dockerhub: You must create an [access token](https://docs.docker.com/docker-hub/access-tokens/) to download the Docker images from the production server. Then  you must create the following repositories in your Docker Hub account:
+* **Dockerhub:** You must create an [access token](https://docs.docker.com/docker-hub/access-tokens/) to download the Docker images from the production server. Then  you must create the following repositories in your Docker Hub account:
   * {{cookiecutter.project_name}}
   * {{cookiecutter.project_name}}-nginx
 {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
@@ -56,12 +56,12 @@ You will have to configure the the Dockerhub account, the Github actions for the
   * {{cookiecutter.project_name}}-grafana
 {% endif %}
 
- * Production server: For this example we will be using [Digital Ocean](https://www.digitalocean.com/). Digital Ocean provides with droplets with Docker pre-installed. For an easy installation, I really recommend you to use those droplets. ![image](https://user-images.githubusercontent.com/17761956/140977706-ac9abf8f-931d-41e1-9908-218879b4b2b2.png)
-   To deploy, you must create a deploy SSH key in your local machine that is going to be used to stablish connection between the CI/CD service and your production    server. The following command will create a private ssh key at ~/.ssh/id_deploy_rsa and a public ssh key at ~/.ssh/id_deploy_rsa.pub
+ * **Production server:** For this example we will be using [Digital Ocean](https://www.digitalocean.com/). Digital Ocean provides with droplets with Docker pre-installed. For an easy installation, I really recommend you to use those droplets. ![image](https://user-images.githubusercontent.com/17761956/140977706-ac9abf8f-931d-41e1-9908-218879b4b2b2.png)
+   To deploy, you must create a deploy SSH key in your local machine that is going to be used to stablish connection between the CI/CD service and your production    server. The following command will create a **private** ssh key at **~/.ssh/id_deploy_rsa** and a **public** ssh key at **~/.ssh/id_deploy_rsa.pub**
    ```sh
    $ ssh-keygen -t rsa -C "your_email@example.com" -f ~/.ssh/id_deploy_rsa -N ''
    ```
-   To let Github actions deploy to your production server, you must add the id_deploy_rsa.pub of your local machine inside the production server in the      ~/.ssh/authorized_keys file. You can automate this task inside Digital Ocean using the "User data" option while creating the droplet.
+   To let Github actions deploy to your production server, you must add the **id_deploy_rsa.pub** in the **~/.ssh/authorized_keys** file inside the production server. You can automate this task inside Digital Ocean using the "User data" option while creating the droplet.
 
     ```sh
     $ echo "ssh-rsa AAAACEzaC1yc2E...GvaQ your_email@example.com" >> ~/.ssh/authorized_keys
@@ -69,7 +69,15 @@ You will have to configure the the Dockerhub account, the Github actions for the
     
     ![image](https://user-images.githubusercontent.com/17761956/140996405-44aca971-7b1e-4549-8b7b-b5a5004c43fd.png)
 
-* Github actions: You must enable Github actions in your Github repository and add the required secrets inside Github
+ * **Environment files:** Once the server is created, you must copy the .env files in the production server inside **/opt/{{cookiecutter.project_name}}** path.
+    ```sh
+    $ cat .env.prod
+    $ cat .env.prod.db
+    $ cat .env.prod.proxy-companion
+    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}$ cat .env.prod.grafana{% endif %}
+    ```
+
+* **Github actions:** You must enable Github actions in your Github repository and add the required secrets inside Github
   * Push this repository to Github. 
   * Enable actions inside Repository > Settings > Actions > Actions permissions > Allow all actions.
   * Create the following secrets inside Repository > Settings > Secrets.
@@ -77,24 +85,16 @@ You will have to configure the the Dockerhub account, the Github actions for the
     * DOCKERHUB_TOKEN: Access token generated previously in Docker Hub.
     * PRODUCTION_SERVER_USER: User used to connect to the production server via SSH.
     * PRODUCTION_SERVER_IP: Public IP of the production server.
-    * SSH_PRIVATE_KEY: Generated deploy RSA private key. This will be used to deploy the code in the production server. The SSH key must be generated in your local machine.
-    * SSH_PUBLIC_KEY: Generated deploy RSA public key. This will be used to deploy the code in the production server. The SSH key must be generated in your local machine.
+    * SSH_PRIVATE_KEY: Generated deploy RSA private key (id_deploy_rsa).
+    * SSH_PUBLIC_KEY: Generated deploy RSA public key (id_deploy_rsa.pub).
 
- * Environment files: Once the server is created, remember that you must add the .env files inside /opt/{{cookiecutter.project_name}}.
-    ```sh
-    $ cat .env.prod
-    $ cat .env.prod.db
-    $ cat .env.prod.proxy-companion
-    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}$ cat .env.prod.grafana{% endif %}
-    ```
-  * DNS: It's important that the DNS records are setup properly before deploying the app to the production server. You will need to make sure that you have the following records:
-    * A: record to set the IPv4 of your production server
-    * AAAA: record to set the IPv6 of your production server
-    * CNAME: record to configure the "wwww" subdomain.
-
-Here is an example of how to configure this in [GoDaddy](https://godaddy.com/)
-![Screenshot from 2021-07-11 19-28-45](https://user-images.githubusercontent.com/17761956/125204570-40738000-e27e-11eb-81a4-7a495949af73.png)
+* DNS: It's important that the DNS records are setup properly before deploying the app to the production server. You will need to make sure that you have the following records:
+  * A: record to set the IPv4 of your production server
+  * AAAA: record to set the IPv6 of your production server
+  * CNAME: record to configure the "wwww" subdomain.
+  ![Screenshot from 2021-07-11 19-28-45](https://user-images.githubusercontent.com/17761956/125204570-40738000-e27e-11eb-81a4-7a495949af73.png)
 {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
+
 # Configuring Grafana in production
 It will automatically load the provisioning configurations and serve the dashboard in [http://{{cookiecutter.production_domain_url}}:3000](http://{{cookiecutter.production_domain_url}}:3000).
 {% endif %}
