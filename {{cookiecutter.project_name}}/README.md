@@ -46,9 +46,9 @@ Uses the default Django development server.
 
 ### Deploying to production
 
-You will have to configure the the Dockerhub account, the Github actions for the CI/CD DNS and the production server:
+You will have to configure the the Dockerhub account, the Github actions for the CI/CD, DNS and the production server:
 
-* Dockerhub: You must create an [access token](https://docs.docker.com/docker-hub/access-tokens/) to download the Docker images from the production server. Thenm you must create the following repositories in your Docker Hub account:
+* Dockerhub: You must create an [access token](https://docs.docker.com/docker-hub/access-tokens/) to download the Docker images from the production server. Then  you must create the following repositories in your Docker Hub account:
   * {{cookiecutter.project_name}}
   * {{cookiecutter.project_name}}-nginx
 {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
@@ -57,12 +57,12 @@ You will have to configure the the Dockerhub account, the Github actions for the
 {% endif %}
 
 * Github actions: You must enable Github actions in your Github repository and add the required secrets inside Github
-  * Enable actions inside Reposirory > Settings > Actions > Actions permissions > Allow all actions
-  * Create the following secrets inside Reposirory > Settings > Secrets
+  * Enable actions inside Repository > Settings > Actions > Actions permissions > Allow all actions
+  * Create the following secrets inside Repository > Settings > Secrets
     * DOCKERHUB_USERNAME: Username of your Docker Hub.
     * DOCKERHUB_TOKEN: Access token generated previously in Docker Hub.
-    * SSH_PRIVATE_KEY: Generated RSA private key. This will be used to deploy the code in the server.
-    * SSH_PUBLIC_KEY: Generated RSA public key. This will be used to deploy the code in the server.
+    * SSH_PRIVATE_KEY: Generated RSA private key. This will be used to deploy the code in the production server. The SSH key must be generated in your local machine.
+    * SSH_PUBLIC_KEY: Generated RSA public key. This will be used to deploy the code in the production server. The SSH key must be generated in your local machine.
  * Production server: For this example we will be using [Digital Ocean](https://www.digitalocean.com/). Digital Ocean provides with droplets with Docker pre-installed. For an easy installation, I really recommend you to use those droplets. ![image](https://user-images.githubusercontent.com/17761956/140977706-ac9abf8f-931d-41e1-9908-218879b4b2b2.png)
 While creating the server, you need to specify that the SSH public key generated before is trusted. To do this, you need to add the SSH public key in the end of the ~/.ssh/authorized_keys file.
 
@@ -93,24 +93,24 @@ It will automatically load the provisioning configurations and serve the dashboa
 
 # Hints to work with this project
 
-1. Execute a command inside de Django container in **DEVELOPMENT** environment.
+1. To execute a command inside the Django container in **DEVELOPMENT** environment.
     ```sh
     $ docker-compose exec web python manage.py shell
     ```
-2. Execute a command inside de Django container in **PRODUCTION** environment.
+2. To execute a command inside the Django container in **PRODUCTION** environment.
     ```sh
     $ docker-compose -f docker-compose.prod.yml exec web python manage.py shell
     ```
-3. Create Django migrations. In case you want to execute this in production environment, remember to use the -f parameter.
+3. To create Django migrations. In case you want to execute this in production environment, remember to use the -f parameter.
     ```sh
     $ docker-compose exec web python manage.py makemigrations
     ```
-4. Execute Django migrations. In case you want to execute this in production environment, remember to use the -f parameter.
+4. To execute Django migrations. In case you want to execute this in production environment, remember to use the -f parameter.
     ```sh
     $ docker-compose exec web python manage.py migrate
     ```
    
-5. Create Django admin superuser. In case you want to execute this in production environment, remember to use the -f parameter.
+5. To create Django admin superuser. In case you want to execute this in production environment, remember to use the -f parameter.
     ```sh
     $ docker-compose exec web python manage.py createsuperuser
     ```
