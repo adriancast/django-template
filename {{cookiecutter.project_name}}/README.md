@@ -55,6 +55,33 @@ Here is an example of how to configure this in [GoDaddy](https://godaddy.com/)
 
 ### Production configuration
 
+You will have to configure the production server, the Dockerhub account, Github actions for the CI/CD and the .env files in the production server:
+
+* Dockerhub: You must create an [access token](https://docs.docker.com/docker-hub/access-tokens/) to download the Docker images from the production server. Thenm you must create the following repositories in your Docker Hub account:
+  * {{cookiecutter.project_name}}
+  * {{cookiecutter.project_name}}-nginx
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
+  * {{cookiecutter.project_name}}-prometheus
+  * {{cookiecutter.project_name}}-grafana
+{% endif %}
+
+* Github actions: You must enable Github actions in your Github repository and add the required secrets inside Github
+  * Enable actions inside Reposirory > Settings > Actions > Actions permissions > Allow all actions
+  * Create the following secrets inside Reposirory > Settings > Secrets
+    * DOCKERHUB_USERNAME: Username of your Docker Hub.
+    * DOCKERHUB_TOKEN: Access token generated previously in Docker Hub.
+    * SSH_PRIVATE_KEY: Generated RSA private key. This will be used to deploy the code in the server.
+    * SSH_PUBLIC_KEY: Generated RSA public key. This will be used to deploy the code in the server.
+ * Production server: For this example we will be using [Digital Ocean](https://www.digitalocean.com/). Digital Ocean provides with droplets with Docker pre-installed. For an easy installation, I really recommend you to use those droplets. ![Uploading image.png…](). While creating the server, you need to specify that the SSH public key generated before is trusted. To do this, you need to add the SSH public key in the end of the ~/.ssh/authorized_keys file
+
+    ```sh
+      echo "ssh-rsa EXAMPLEzaC1yc2E...GvaQ== username@203.0.113.0" \
+      >> ~/.ssh/authorized_keys
+    ```
+
+
+### Production configuration
+
 The application will be served using Gunicorn and NGINX with HTTPS certificates.
 
 1. Check that you have your {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}.env.prod.grafana, {% endif %}.env.prod, .env.prod.db and .env.prod.proxy-companion. If for some reason these files are not generated, remember that you can find samples in the repository.
