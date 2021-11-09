@@ -56,21 +56,29 @@ You will have to configure the the Dockerhub account, the Github actions for the
   * {{cookiecutter.project_name}}-grafana
 {% endif %}
 
-* Github actions: You must enable Github actions in your Github repository and add the required secrets inside Github
-  * Enable actions inside Repository > Settings > Actions > Actions permissions > Allow all actions
-  * Create the following secrets inside Repository > Settings > Secrets
-    * DOCKERHUB_USERNAME: Username of your Docker Hub.
-    * DOCKERHUB_TOKEN: Access token generated previously in Docker Hub.
-    * SSH_PRIVATE_KEY: Generated RSA private key. This will be used to deploy the code in the production server. The SSH key must be generated in your local machine.
-    * SSH_PUBLIC_KEY: Generated RSA public key. This will be used to deploy the code in the production server. The SSH key must be generated in your local machine.
  * Production server: For this example we will be using [Digital Ocean](https://www.digitalocean.com/). Digital Ocean provides with droplets with Docker pre-installed. For an easy installation, I really recommend you to use those droplets. ![image](https://user-images.githubusercontent.com/17761956/140977706-ac9abf8f-931d-41e1-9908-218879b4b2b2.png)
-While creating the server, you need to specify that the SSH public key generated before is trusted. To do this, you need to add the SSH public key in the end of the ~/.ssh/authorized_keys file.
+   To deploy, you must create a deploy SSH key in your local machine that is going to be used to stablish connection between the CI/CD service and your production    server. The following command will create a private ssh key at ~/.ssh/id_deploy_rsa and a public ssh key at ~/.ssh/id_deploy_rsa.pub
+   ```sh
+   $ ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_deploy_rsa
+   ```
+   To let Github actions deploy to your production server, you must add the id_deploy_rsa.pub of your local machine inside the production server in the      ~/.ssh/authorized_keys file. You can automate this task inside Digital Ocean using the "User data" option while creating the droplet.
 
     ```sh
-      echo "ssh-rsa EXAMPLEzaC1yc2E...GvaQ== username@203.0.113.0" >> ~/.ssh/authorized_keys
+    $ echo "ssh-ed25519 AAAACEzaC1yc2E...GvaQ your_email@example.com" >> ~/.ssh/authorized_keys
     ```
-    You can automate this task inside Digital Ocean using the "User data" option while creating the droplet.
+    
     ![image](https://user-images.githubusercontent.com/17761956/140977992-e6ea2b6e-69bb-4b17-a86b-476de166e74e.png)
+
+* Github actions: You must enable Github actions in your Github repository and add the required secrets inside Github
+  * Push this repository to Github. 
+  * Enable actions inside Repository > Settings > Actions > Actions permissions > Allow all actions.
+  * Create the following secrets inside Repository > Settings > Secrets.
+    * DOCKERHUB_USERNAME: Username of your Docker Hub.
+    * DOCKERHUB_TOKEN: Access token generated previously in Docker Hub.
+    * PRODUCTION_SERVER_USER: User used to connect to the production server via SSH.
+    * PRODUCTION_SERVER_IP: Public IP of the production server.
+    * SSH_PRIVATE_KEY: Generated deploy RSA private key. This will be used to deploy the code in the production server. The SSH key must be generated in your local machine.
+    * SSH_PUBLIC_KEY: Generated deploy RSA public key. This will be used to deploy the code in the production server. The SSH key must be generated in your local machine.
 
  * Environment files: Once the server is created, remember that you must add the .env files inside /opt/{{cookiecutter.project_name}}.
     ```sh
