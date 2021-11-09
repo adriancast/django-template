@@ -72,43 +72,26 @@ You will have to configure the production server, the Dockerhub account, Github 
     * DOCKERHUB_TOKEN: Access token generated previously in Docker Hub.
     * SSH_PRIVATE_KEY: Generated RSA private key. This will be used to deploy the code in the server.
     * SSH_PUBLIC_KEY: Generated RSA public key. This will be used to deploy the code in the server.
- * Production server: For this example we will be using [Digital Ocean](https://www.digitalocean.com/). Digital Ocean provides with droplets with Docker pre-installed. For an easy installation, I really recommend you to use those droplets. ![Uploading image.png…](). While creating the server, you need to specify that the SSH public key generated before is trusted. To do this, you need to add the SSH public key in the end of the ~/.ssh/authorized_keys file
+ * Production server: For this example we will be using [Digital Ocean](https://www.digitalocean.com/). Digital Ocean provides with droplets with Docker pre-installed. For an easy installation, I really recommend you to use those droplets. ![image](https://user-images.githubusercontent.com/17761956/140977706-ac9abf8f-931d-41e1-9908-218879b4b2b2.png)
+. While creating the server, you need to specify that the SSH public key generated before is trusted. To do this, you need to add the SSH public key in the end of the ~/.ssh/authorized_keys file.
 
     ```sh
-      echo "ssh-rsa EXAMPLEzaC1yc2E...GvaQ== username@203.0.113.0" \
-      >> ~/.ssh/authorized_keys
+      echo "ssh-rsa EXAMPLEzaC1yc2E...GvaQ== username@203.0.113.0" >> ~/.ssh/authorized_keys
     ```
+    You can automate this task inside Digital Ocean using the "User data" option while creating the droplet.
+    ![image](https://user-images.githubusercontent.com/17761956/140977992-e6ea2b6e-69bb-4b17-a86b-476de166e74e.png)
 
-
-### Production configuration
-
-The application will be served using Gunicorn and NGINX with HTTPS certificates.
-
-1. Check that you have your {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}.env.prod.grafana, {% endif %}.env.prod, .env.prod.db and .env.prod.proxy-companion. If for some reason these files are not generated, remember that you can find samples in the repository.
+ * Environment files: Once the server is created, remember that you must add the .env files inside /opt/{{cookiecutter.project_name}}.
     ```sh
     $ cat .env.prod
     $ cat .env.prod.db
     $ cat .env.prod.proxy-companion
     {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}$ cat .env.prod.grafana{% endif %}
     ```
-2. Create docker volumes to save the data
-    ```sh
-    $ docker volume create --name={{cookiecutter.project_name}}_postgres_data
-    $ docker volume create --name=static_volume
-    $ docker volume create --name=media_volume
-    $ docker volume create --name=certs
-    $ docker volume create --name=html
-    $ docker volume create --name=vhost
-    {% if cookiecutter.add_prometheus_and_grafana == 'yes' %}$ docker volume create --name={{cookiecutter.project_name}}_grafana{% endif %}
-    ```
-3. Build the images and run the containers:
-
-    ```sh
-    $ docker-compose -f docker-compose.prod.yml up --build
-    ```
-# Production Grafana
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}
+# Configuring Grafana in production
 It will automatically load the provisioning configurations and serve the dashboard in [http://{{cookiecutter.production_domain_url}}:3000](http://{{cookiecutter.production_domain_url}}:3000).
-
+{% endif %}
 
 # Hints to work with this project
 
