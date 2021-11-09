@@ -59,15 +59,15 @@ You will have to configure the the Dockerhub account, the Github actions for the
  * Production server: For this example we will be using [Digital Ocean](https://www.digitalocean.com/). Digital Ocean provides with droplets with Docker pre-installed. For an easy installation, I really recommend you to use those droplets. ![image](https://user-images.githubusercontent.com/17761956/140977706-ac9abf8f-931d-41e1-9908-218879b4b2b2.png)
    To deploy, you must create a deploy SSH key in your local machine that is going to be used to stablish connection between the CI/CD service and your production    server. The following command will create a private ssh key at ~/.ssh/id_deploy_rsa and a public ssh key at ~/.ssh/id_deploy_rsa.pub
    ```sh
-   $ ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_deploy_rsa
+   $ ssh-keygen -t rsa -C "your_email@example.com" -f ~/.ssh/id_deploy_rsa -N ''
    ```
    To let Github actions deploy to your production server, you must add the id_deploy_rsa.pub of your local machine inside the production server in the      ~/.ssh/authorized_keys file. You can automate this task inside Digital Ocean using the "User data" option while creating the droplet.
 
     ```sh
-    $ echo "ssh-ed25519 AAAACEzaC1yc2E...GvaQ your_email@example.com" >> ~/.ssh/authorized_keys
+    $ echo "ssh-rsa AAAACEzaC1yc2E...GvaQ your_email@example.com" >> ~/.ssh/authorized_keys
     ```
     
-    ![image](https://user-images.githubusercontent.com/17761956/140977992-e6ea2b6e-69bb-4b17-a86b-476de166e74e.png)
+    ![image](https://user-images.githubusercontent.com/17761956/140996405-44aca971-7b1e-4549-8b7b-b5a5004c43fd.png)
 
 * Github actions: You must enable Github actions in your Github repository and add the required secrets inside Github
   * Push this repository to Github. 
