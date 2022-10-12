@@ -1,7 +1,9 @@
-Django==3.2
-django-admin-interface==0.15.5
-gunicorn==20.0.4
-Pillow==8.1.2
-psycopg2-binary==2.8.6
-{% if cookiecutter.add_sentry == 'yes' %}sentry-sdk==1.1.0{% endif %}
-{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}django-prometheus==2.0.0{% endif %}
+Django==4.1.2
+pytz==2022.4
+tzdata==2022.4
+django-admin-interface==0.22.0
+gunicorn==20.1.0
+Pillow==9.2.0
+psycopg2-binary==2.9.4
+{% if cookiecutter.add_sentry == 'yes' %}sentry-sdk==1.9.10{% endif %}
+{% if cookiecutter.add_prometheus_and_grafana == 'yes' %}django-prometheus==2.2.0{% endif %}
