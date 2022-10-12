@@ -1,5 +1,6 @@
 {
     "project_name": "projectname",
+    "license": ["MIT License", "GNU General Public License v3", "Unlicense"],
     "secret_key": "Plea$eUse$trong$ecretKey",
     "postgresql_database": "DatabaseNamePostgreSQL",
     "postgresql_user": "DatabaseUserPostgreSQL",
