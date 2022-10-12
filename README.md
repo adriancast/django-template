@@ -9,9 +9,20 @@ Lets be clear. If you can do a task in less than 5 minutes why would you even bo
 6. **Monitoring:** If selected in the wizard, Sentry configuration will be added to your project. Remember to edit the Sentry DSN once you created your project in order to connect your project with your Sentry account.
 7. **Metrics:** If selected in the wizard, Grafana and Prometheus will be added to your project. This template will configure the datasource automatically and will add a dashboard to your Grafana displaying basic metrics of your Django application.
 
-# Architecture Diagram
+# Languages and Technologies 👨🏻‍💻
 
-Once all the tools are installed, you architecture would look like the following 
+![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![DigitalOcean](https://img.shields.io/badge/DigitalOcean-%230167ff.svg?style=for-the-badge&logo=digitalOcean&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white)
+![Grafana](https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white)
+
+# Architecture Diagram
 
 ![Arhitecture Diagram](https://user-images.githubusercontent.com/23509868/137785149-5aa83029-6579-4b1c-a4e6-c2de2e27722e.jpg)
 
